@@ -17,3 +17,43 @@ A Django-based web application for managing and reviewing text and image URL ent
 ```bash
 git clone https://github.com/Lawliet-3/interntask1.git
 cd interntask1
+
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+
+```bash
+pip install django
+
+```bash
+python manage.py migrate
+
+```bash
+python manage.py createsuperuser
+
+```bash
+python manage.py runserver
+
+
+## Technologies Used
+- Django
+- Bootstrap 5
+- HTMX
+- SQLite
+## AI Usage Report
+The following components were developed with AI assistance:
+
+1. Frontend Templates:
+   
+   - Base template structure
+   - Entry form layout
+   - Entry list view with filtering and pagination
+   - HTMX integration for review functionality
+2. Styling:
+   
+   - Bootstrap implementation
+   - Responsive design elements
+
+3. Documentation:
+
+   - Setup instructions
