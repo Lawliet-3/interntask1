@@ -1,6 +1,4 @@
 
-
-```
 # Data Submission Portal
 
 A Django-based web application for managing and reviewing text and image URL entries with filtering, search, and review functionality.
