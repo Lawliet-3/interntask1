@@ -73,4 +73,3 @@ The following components were developed with AI assistance:
 
 3. Documentation:
    - Setup instructions
-```
