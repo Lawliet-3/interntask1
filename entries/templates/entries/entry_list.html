@@ -1,0 +1,93 @@
+{% extends 'entries/base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <form method="get" class="row g-3">
+            <div class="col-md-4">
+                <select name="category" class="form-select" onchange="this.form.submit()" title="Filter entries by category" aria-label="Filter entries by category">
+                    <option value="">All Categories</option>
+                    <option value="text" {% if category_filter == 'text' %}selected{% endif %}>Text</option>
+                    <option value="image_url" {% if category_filter == 'image_url' %}selected{% endif %}>Image URL</option>
+                </select>
+            </div>
+            <div class="col-md-8">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search entries..." value="{{ search_query|default:'' }}">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Statistics</h5>
+                <ul class="list-unstyled mb-0">
+                    <li></li>
+                    {% for stat in category_stats %}
+                    <li>{{ stat.category|title }}: {{ stat.count }} entries</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Content</th>
+                <th>Category</th>
+                <th>Timestamp</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in page_obj %}
+            <tr>
+                <td>{{ entry.content }}</td>
+                <td>{{ entry.category|title }}</td>
+                <td>{{ entry.timestamp|date:"Y-m-d H:i" }}</td>
+                <td>
+                    <button class="btn btn-sm btn-{{ entry.is_reviewed|yesno:'success,secondary' }}" 
+                            hx-post="{% url 'toggle_review' entry.id %}" 
+                            hx-swap="outerHTML">
+                        {{ entry.is_reviewed|yesno:'Reviewed,Mark as Reviewed' }}
+                    </button>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No entries found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if page_obj.paginator.num_pages > 1 %}
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if category_filter %}&category={{ category_filter }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">Previous</a>
+        </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+        <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}{% if category_filter %}&category={{ category_filter }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">{{ num }}</a>
+        </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if category_filter %}&category={{ category_filter }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

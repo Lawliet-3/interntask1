@@ -1,0 +1,35 @@
+{% extends 'entries/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Create New Entry</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Content</label>
+                        <textarea name="content" id="content" class="form-control" rows="3" required></textarea>
+                        <div class="form-text">Enter text content or image URL</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select name="category" id="category" class="form-select" required>
+                            <option value="">Select a category</option>
+                            <option value="text">Text</option>
+                            <option value="image_url">Image URL</option>
+                        </select>
+                    </div>
+                    <div class="text-end">
+                        <a href="{% url 'entry_list' %}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Create Entry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
