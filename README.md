@@ -18,20 +18,19 @@ A Django-based web application for managing and reviewing text and image URL ent
 git clone https://github.com/Lawliet-3/interntask1.git
 cd interntask1
 
-```bash
+
 python -m venv venv
 .\venv\Scripts\activate
 
-```bash
+
 pip install django
 
-```bash
+
 python manage.py migrate
 
-```bash
+
 python manage.py createsuperuser
 
-```bash
 python manage.py runserver
 
 
