@@ -1,6 +1,6 @@
-I'll help you fix the code blocks in the README.md. The issue is that each command should be in its own code block.
 
-```markdown:c:\Users\kaung\Interntask1\README.md
+
+```
 # Data Submission Portal
 
 A Django-based web application for managing and reviewing text and image URL entries with filtering, search, and review functionality.
