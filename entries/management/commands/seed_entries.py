@@ -30,7 +30,6 @@ class Command(BaseCommand):
             category = random.choice(categories)
             content = random.choice(text_contents) if category == 'text' else random.choice(image_urls)
             
-            # Random timestamp within the last 30 days
             random_days = random.randint(0, 30)
             random_hours = random.randint(0, 23)
             random_minutes = random.randint(0, 59)
@@ -40,7 +39,7 @@ class Command(BaseCommand):
                 minutes=random_minutes
             )
 
-            DataEntry.objects.create(  # Changed from Entry to DataEntry
+            DataEntry.objects.create( 
                 content=content,
                 category=category,
                 timestamp=timestamp,
