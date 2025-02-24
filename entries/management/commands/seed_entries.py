@@ -30,6 +30,7 @@ class Command(BaseCommand):
             category = random.choice(categories)
             content = random.choice(text_contents) if category == 'text' else random.choice(image_urls)
             
+            # Generate a random timestamp within the last 30 days
             random_days = random.randint(0, 30)
             random_hours = random.randint(0, 23)
             random_minutes = random.randint(0, 59)

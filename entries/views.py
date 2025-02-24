@@ -25,7 +25,7 @@ def entry_list(request):
     
     # Category statistics
     category_stats = DataEntry.objects.values('category').annotate(count=Count('id'))
-    
+
     context = {
         'page_obj': page_obj,
         'category_stats': category_stats,
@@ -60,12 +60,12 @@ def toggle_review(request, entry_id):
         entry = get_object_or_404(DataEntry, id=entry_id)
         entry.is_reviewed = not entry.is_reviewed
         entry.save()
-        
+        # Checking if the request is an AJAX request
         if request.headers.get('HX-Request'):
             csrf_token = request.COOKIES.get('csrftoken', '')
             button_class = 'success' if entry.is_reviewed else 'secondary'
             button_text = 'Reviewed' if entry.is_reviewed else 'Mark as Reviewed'
-            
+            # Generating the HTML for the button
             button_html = f'''
                 <button class="btn btn-sm btn-{button_class}"
                     hx-post="{reverse('toggle_review', args=[entry.id])}"
@@ -79,6 +79,3 @@ def toggle_review(request, entry_id):
         
         return redirect(request.META.get('HTTP_REFERER', 'entry_list'))
     return HttpResponse(status=405)
-def entry_detail(request, entry_id):
-    entry = get_object_or_404(DataEntry, id=entry_id)
-    return render(request, 'entries/entry_detail.html', {'entry': entry})
