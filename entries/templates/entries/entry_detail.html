@@ -1,0 +1,44 @@
+{% extends 'entries/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Entry Details</h5>
+            <a href="{% url 'entry_list' %}" class="btn btn-outline-secondary btn-sm">Back to List</a>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-3"><strong>Content:</strong></div>
+                <div class="col-md-9">
+                    {% if entry.category == 'image_url' %}
+                        <img src="{{ entry.content }}" alt="Entry Image" class="img-fluid mb-2">
+                        <div class="text-muted">{{ entry.content }}</div>
+                    {% else %}
+                        {{ entry.content }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3"><strong>Category:</strong></div>
+                <div class="col-md-9">{{ entry.category|title }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3"><strong>Created:</strong></div>
+                <div class="col-md-9">{{ entry.timestamp|date:"F j, Y, g:i a" }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3"><strong>Review Status:</strong></div>
+                <div class="col-md-9">
+                    <button class="btn btn-{{ entry.is_reviewed|yesno:'success,secondary' }}" 
+                            hx-post="{% url 'toggle_review' entry.id %}" 
+                            hx-swap="outerHTML"
+                            hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>                            
+                        {{ entry.is_reviewed|yesno:'Reviewed,Mark as Reviewed' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

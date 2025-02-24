@@ -47,13 +47,14 @@
         <tbody>
             {% for entry in page_obj %}
             <tr>
-                <td>{{ entry.content }}</td>
+                <td><a href="{% url 'entry_detail' entry.id %}" class="text-decoration-none">{{ entry.content }}</a></td>
                 <td>{{ entry.category|title }}</td>
                 <td>{{ entry.timestamp|date:"Y-m-d H:i" }}</td>
                 <td>
                     <button class="btn btn-sm btn-{{ entry.is_reviewed|yesno:'success,secondary' }}" 
                             hx-post="{% url 'toggle_review' entry.id %}" 
-                            hx-swap="outerHTML">
+                            hx-swap="outerHTML"
+                            hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>                            
                         {{ entry.is_reviewed|yesno:'Reviewed,Mark as Reviewed' }}
                     </button>
                 </td>
